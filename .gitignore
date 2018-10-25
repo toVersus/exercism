@@ -1,1 +1,5 @@
 **/.solution.json
+
+# result to be used for comparing benchmarks in golang
+**/new.txt
+**/old.txt
