@@ -6,20 +6,27 @@ import (
 
 // Valid determines whether or not it is valid per the Luhn formula.
 func Valid(code string) bool {
-	sum, size, mul := 0, 0, 1
+	sum, size := 0, 0
 
 	for i := len(code); i > 0; i-- {
 		letter := rune(code[i-1])
 
 		if unicode.IsNumber(letter) {
-			digit := int(letter-'0') * mul
+			digit := int(letter - '0')
+			if size%2 == 1 {
+				digit *= 2
+			}
+
 			if digit > 9 {
 				digit -= 9
 			}
-			mul ^= 3
+
 			sum += digit
 			size++
-		} else if !unicode.IsSpace(letter) {
+			continue
+		}
+
+		if !unicode.IsSpace(letter) {
 			return false
 		}
 	}
